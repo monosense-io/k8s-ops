@@ -47,7 +47,7 @@ development_status:
   # Epic 0: Repository Foundation
   epic-0: in-progress
   0-1-initialize-repository-structure: done
-  0-2-create-shared-infrastructure-base: ready-for-dev
+  0-2-create-shared-infrastructure-base: done
   0-3-configure-cluster-specific-flux-entry-points: ready-for-dev
   0-4-configure-sops-age-encryption: ready-for-dev
   0-5-create-github-workflows-for-validation: ready-for-dev
