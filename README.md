@@ -87,4 +87,4 @@ task flux:reconcile
 
 ## License
 
-MIT
+WTFPL
