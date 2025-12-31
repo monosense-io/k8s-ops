@@ -1,0 +1,177 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeBranch"
+  ],
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+
+  // Flux HelmRelease chart version detection
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Process Flux HelmRelease chart versions",
+      "fileMatch": [
+        "(^|/)helmrelease\\.yaml$"
+      ],
+      "matchStrings": [
+        "# renovate: registryUrl=(?<registryUrl>[^\\s]+)\\s+chart=(?<depName>[^\\s]+)\\s*\\n.*?version:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
+      ],
+      "datasourceTemplate": "helm",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Process container images in HelmRelease values",
+      "fileMatch": [
+        "(^|/)helmrelease\\.yaml$"
+      ],
+      "matchStrings": [
+        "repository:\\s*[\"']?(?<depName>[^\"'\\s]+)[\"']?\\s*\\n\\s*tag:\\s*[\"']?(?<currentValue>[^@\"'\\s]+)(@(?<currentDigest>sha256:[a-f0-9]+))?[\"']?"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Process raw GitHub releases",
+      "fileMatch": [
+        "(^|/)helmrelease\\.yaml$",
+        "(^|/)kustomization\\.yaml$"
+      ],
+      "matchStrings": [
+        "https://github\\.com/(?<depName>[^/]+/[^/]+)/releases/download/(?<currentValue>[^/]+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Process Talos installer images",
+      "fileMatch": [
+        "(^|/)talconfig\\.yaml$"
+      ],
+      "matchStrings": [
+        "installerImage:\\s*factory\\.talos\\.dev/installer/(?<currentValue>[^:]+):v(?<currentVersion>[^\\s]+)"
+      ],
+      "depNameTemplate": "siderolabs/talos",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Process Flux OCIRepository chart references (url and tag within 10 lines)",
+      "fileMatch": [
+        "(^|/)ocirepository\\.yaml$",
+        "(^|/)repositories/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "url:\\s*oci://(?<registryUrl>[^/]+)/(?<depName>[^\\s]+)\\n(?:(?!^(?:---|apiVersion:|kind:)).*\\n){0,10}?\\s*tag:\\s*[\"']?(?<currentValue>[^\"'\\s]+)[\"']?"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ],
+
+  // Package grouping rules
+  "packageRules": [
+    // Labels for PR categorization
+    {
+      "description": "Add helm label",
+      "matchDatasources": ["helm"],
+      "labels": ["helm"]
+    },
+    {
+      "description": "Add docker label",
+      "matchDatasources": ["docker"],
+      "labels": ["docker"]
+    },
+    {
+      "description": "Add github-actions label",
+      "matchManagers": ["github-actions"],
+      "labels": ["github-actions"]
+    },
+
+    // Automerge patch updates
+    {
+      "description": "Automerge patch updates",
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+
+    // Group patch updates weekly
+    {
+      "description": "Group patch updates weekly",
+      "matchUpdateTypes": ["patch"],
+      "schedule": ["before 4am on Monday"],
+      "groupName": "all patch updates"
+    },
+
+    // Group minor updates monthly
+    {
+      "description": "Group minor updates monthly",
+      "matchUpdateTypes": ["minor"],
+      "schedule": ["before 4am on the first day of the month"],
+      "groupName": "all minor updates"
+    },
+
+    // Major updates as individual PRs (no grouping)
+    {
+      "description": "Major updates as individual PRs",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["major"]
+    },
+
+    // Flux-specific grouping
+    {
+      "description": "Group Flux updates together",
+      "matchPackagePatterns": ["^fluxcd/"],
+      "groupName": "flux"
+    },
+
+    // Cilium grouping
+    {
+      "description": "Group Cilium updates together",
+      "matchPackagePatterns": ["cilium"],
+      "groupName": "cilium"
+    },
+
+    // Rook-Ceph grouping
+    {
+      "description": "Group Rook-Ceph updates together",
+      "matchPackagePatterns": ["rook", "ceph"],
+      "groupName": "rook-ceph"
+    },
+
+    // External Secrets Operator
+    {
+      "description": "Group External Secrets updates",
+      "matchPackagePatterns": ["external-secrets"],
+      "groupName": "external-secrets"
+    },
+
+    // Disable updates for specific packages if needed
+    {
+      "description": "Disable Kubernetes version updates (managed separately)",
+      "matchPackagePatterns": ["^kubernetes$", "^k8s\\.io/", "^kubernetes/", "^registry\\.k8s\\.io/"],
+      "enabled": false
+    }
+  ],
+
+  // Kubernetes manifest files - disabled to prevent duplicate PRs with customManagers
+  // The customManagers above handle HelmRelease, OCIRepository, and image updates
+  "kubernetes": {
+    "enabled": false
+  }
+}

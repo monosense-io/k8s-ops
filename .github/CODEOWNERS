@@ -1,0 +1,21 @@
+# Default owners for everything in the repo
+* @trosvald
+
+# Cluster-specific configurations
+/clusters/infra/ @trosvald
+/clusters/apps/ @trosvald
+
+# Infrastructure
+/infrastructure/ @trosvald
+
+# Kubernetes resources
+/kubernetes/ @trosvald
+
+# Bootstrap
+/bootstrap/ @trosvald
+
+# Terraform
+/terraform/ @trosvald
+
+# CI/CD workflows
+/.github/ @trosvald

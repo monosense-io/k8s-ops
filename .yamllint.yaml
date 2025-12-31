@@ -1,0 +1,75 @@
+---
+extends: default
+
+rules:
+  # Line length - relaxed for Kubernetes manifests
+  line-length:
+    max: 150
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
+
+  # Indentation - 2 spaces, consistent with Kubernetes standards
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Comments - require space after #
+  comments:
+    require-starting-space: true
+    ignore-shebangs: true
+    min-spaces-from-content: 1
+
+  # Braces
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+
+  # Brackets
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+
+  # Colons
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: 1
+
+  # Commas
+  commas:
+    max-spaces-before: 0
+    min-spaces-after: 1
+    max-spaces-after: 1
+
+  # Document markers
+  document-start: disable
+  document-end: disable
+
+  # Empty lines
+  empty-lines:
+    max: 2
+    max-start: 0
+    max-end: 1
+
+  # Truthy values - Kubernetes uses only true/false
+  truthy:
+    allowed-values: ["true", "false"]
+    check-keys: false
+
+  # Trailing spaces
+  trailing-spaces: enable
+
+  # New line at end of file
+  new-line-at-end-of-file: enable
+
+ignore: |
+  # Ignore BMAD framework files
+  _bmad/
+  # Ignore generated files
+  clusterconfig/
+  .cache/
+  node_modules/
+  # Ignore Helm chart templates (contain Go templating)
+  **/templates/**/*.yaml
+  # Ignore encrypted files (project uses .yaml only per .editorconfig)
+  *.sops.yaml

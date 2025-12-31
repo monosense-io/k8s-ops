@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  push:
+    desc: Push kubeconfig to 1Password (multi-cluster)
+    cmds:
+      - echo "Push kubeconfig for {{.CLUSTER}} to 1Password"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"
+
+  pull:
+    desc: Pull kubeconfig from 1Password (multi-cluster)
+    cmds:
+      - echo "Pull kubeconfig for {{.CLUSTER}} from 1Password"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"

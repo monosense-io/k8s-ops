@@ -1,0 +1,21 @@
+# SOPS configuration for k8s-ops repository
+# Uses AGE encryption for secret management
+#
+# All encrypted files use the same AGE key. Path-specific rules are documented
+# for clarity but the catch-all rule handles all .sops.yaml files.
+#
+# AGE Public Key: age1j3hsfptdfsfwvkf504etjkrtmajny9csrfh5s24uqh6fchmg5dgqg087ek
+#
+# Expected encrypted file locations:
+#   - clusters/{infra,apps}/**/*.sops.yaml  - Cluster-specific secrets
+#   - infrastructure/**/*.sops.yaml         - Shared infrastructure secrets
+#   - kubernetes/**/*.sops.yaml             - Kubernetes app secrets
+#   - bootstrap/**/*.sops.yaml              - Bootstrap secrets
+#   - **/talos/**/*.sops.yaml               - Talos machine configs
+#   - terraform/**/*.sops.yaml              - Terraform secrets
+
+creation_rules:
+  # Single rule for all encrypted files (all use same AGE key)
+  # Project standardizes on .yaml extension per .editorconfig
+  - path_regex: .*\.sops\.yaml$
+    age: age1j3hsfptdfsfwvkf504etjkrtmajny9csrfh5s24uqh6fchmg5dgqg087ek

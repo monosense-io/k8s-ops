@@ -1,0 +1,67 @@
+# BMAD artifacts
+_bmad/
+.claude/
+.codex/
+.qodo/
+
+# SOPS decrypted files (never commit plaintext secrets)
+*.dec.yaml
+*.dec.yml
+*.decrypted.yaml
+*.decrypted.yml
+
+# Talos generated files
+# Encrypted configs are allowed: *.sops.yaml
+clusterconfig/*.yaml
+!clusterconfig/*.sops.yaml
+
+# IDE and editor files
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+.*.sw?
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary and build files
+*.tmp
+*.temp
+*.bak
+build/
+dist/
+.cache/
+
+# Kubeconfig files (contain cluster credentials)
+.kubeconfig*
+kubeconfig*
+!kubeconfig.example
+
+# Terraform state files (contain sensitive data)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Log files (in logs directory and common temp locations)
+logs/*.log
+*.log.tmp
+debug.log
+error.log

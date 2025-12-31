@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  sync-secrets:
+    desc: Sync secrets from 1Password to cluster
+    cmds:
+      - echo "Sync secrets for {{.CLUSTER}}"
+      - echo "TODO - Implement in Story 4.4: Create Kubernetes Operational Taskfiles"
+
+  hr-restart:
+    desc: Restart a HelmRelease by name
+    cmds:
+      - echo "Restart HelmRelease"
+      - echo "TODO - Implement in Story 4.4: Create Kubernetes Operational Taskfiles"
+
+  cleanse-pods:
+    desc: Delete pods in error states
+    cmds:
+      - echo "Cleanse error pods"
+      - echo "TODO - Implement in Story 4.4: Create Kubernetes Operational Taskfiles"
+
+  browse-pvc:
+    desc: Browse PVC contents via temporary pod
+    cmds:
+      - echo "Browse PVC"
+      - echo "TODO - Implement in Story 4.4: Create Kubernetes Operational Taskfiles"

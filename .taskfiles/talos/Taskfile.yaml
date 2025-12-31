@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  apply-node:
+    desc: Apply Talos machine config to a node
+    cmds:
+      - echo "Apply Talos config to node"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"
+
+  upgrade-node:
+    desc: Upgrade Talos on a node
+    cmds:
+      - echo "Upgrade Talos on node"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"
+
+  upgrade-k8s:
+    desc: Upgrade Kubernetes version on cluster
+    cmds:
+      - echo "Upgrade Kubernetes version"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"
+
+  reset-cluster:
+    desc: Reset Talos cluster (destructive)
+    cmds:
+      - echo "Reset Talos cluster"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"
+
+  generate-iso:
+    desc: Generate Talos installation ISO
+    cmds:
+      - echo "Generate Talos ISO"
+      - echo "TODO - Implement in Story 1.5: Create Operational Taskfiles for Talos"

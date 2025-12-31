@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  snapshot:
+    desc: Create VolSync snapshot for an app
+    cmds:
+      - echo "Create VolSync snapshot"
+      - echo "TODO - Implement in Story 7.3: Create VolSync Operational Taskfiles"
+
+  restore:
+    desc: Restore from VolSync backup
+    cmds:
+      - echo "Restore from VolSync backup"
+      - echo "TODO - Implement in Story 7.3: Create VolSync Operational Taskfiles"
+
+  unlock:
+    desc: Unlock stuck VolSync repository
+    cmds:
+      - echo "Unlock VolSync repository"
+      - echo "TODO - Implement in Story 7.3: Create VolSync Operational Taskfiles"
+
+  list:
+    desc: List VolSync snapshots
+    cmds:
+      - echo "List VolSync snapshots"
+      - echo "TODO - Implement in Story 7.3: Create VolSync Operational Taskfiles"
+
+  status:
+    desc: Show VolSync replication status
+    cmds:
+      - echo "Show VolSync status"
+      - echo "TODO - Implement in Story 7.3: Create VolSync Operational Taskfiles"

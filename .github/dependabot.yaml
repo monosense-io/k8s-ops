@@ -1,0 +1,17 @@
+# Dependabot configuration for GitHub Actions updates
+# Note: Kubernetes/Helm updates are managed by Renovate
+
+version: 2
+updates:
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    commit-message:
+      prefix: "ci(github-actions)"
+    labels:
+      - "github-actions"
+      - "dependencies"
+    open-pull-requests-limit: 5

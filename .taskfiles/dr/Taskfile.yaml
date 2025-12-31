@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  verify-backups:
+    desc: Verify backup integrity across all apps
+    cmds:
+      - echo "Verify backups"
+      - echo "TODO - Implement in Story 7.4: Document and Test Disaster Recovery Procedures"
+
+  test-cnpg-restore:
+    desc: Test CNPG database restore procedure
+    cmds:
+      - echo "Test CNPG restore"
+      - echo "TODO - Implement in Story 7.4: Document and Test Disaster Recovery Procedures"

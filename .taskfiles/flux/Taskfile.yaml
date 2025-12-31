@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  reconcile:
+    desc: Force reconcile Flux resources
+    cmds:
+      - echo "Reconcile Flux resources"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"
+
+  suspend:
+    desc: Suspend Flux reconciliation
+    cmds:
+      - echo "Suspend Flux"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"
+
+  resume:
+    desc: Resume Flux reconciliation
+    cmds:
+      - echo "Resume Flux"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"
+
+  logs:
+    desc: Show Flux controller logs
+    cmds:
+      - echo "Show Flux logs"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"
+
+  events:
+    desc: Show Flux events
+    cmds:
+      - echo "Show Flux events"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"
+
+  diff:
+    desc: Show pending Flux changes
+    cmds:
+      - echo "Show Flux diff"
+      - echo "TODO - Implement in Story 3.1: Create Flux Operational Taskfiles"

@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  # Cluster selection - override with CLUSTER env var or --var CLUSTER=apps
+  CLUSTER: '{{.CLUSTER | default "infra"}}'
+  # Repository root
+  ROOT_DIR:
+    sh: git rev-parse --show-toplevel
+  # Cluster-specific paths
+  CLUSTER_DIR: "{{.ROOT_DIR}}/clusters/{{.CLUSTER}}"
+  TALOS_DIR: "{{.CLUSTER_DIR}}/talos"
+  FLUX_DIR: "{{.CLUSTER_DIR}}/flux"
+  # Kubeconfig path (multi-cluster aware)
+  KUBECONFIG: "{{.ROOT_DIR}}/.kubeconfig-{{.CLUSTER}}"
+
+env:
+  KUBECONFIG: "{{.KUBECONFIG}}"
+
+includes:
+  bootstrap: .taskfiles/bootstrap
+  talos: .taskfiles/talos
+  kubernetes: .taskfiles/kubernetes
+  flux: .taskfiles/flux
+  volsync: .taskfiles/volsync
+  dr: .taskfiles/dr
+  op: .taskfiles/op
+
+tasks:
+  default:
+    desc: Show available tasks
+    silent: true
+    preconditions:
+      - sh: git rev-parse --git-dir > /dev/null 2>&1
+        msg: "This must be run from within a git repository"
+    cmds:
+      - task --list
+
+  init:
+    desc: Initialize development environment
+    preconditions:
+      - sh: git rev-parse --git-dir > /dev/null 2>&1
+        msg: "This must be run from within a git repository"
+    cmds:
+      - echo "Initializing k8s-ops development environment..."
+      - echo "Current cluster target - {{.CLUSTER}}"
+
+  validate:
+    desc: Run all validation checks
+    preconditions:
+      - sh: git rev-parse --git-dir > /dev/null 2>&1
+        msg: "This must be run from within a git repository"
+    cmds:
+      - task: validate:yaml
+      - task: validate:kustomize
+
+  validate:yaml:
+    desc: Validate YAML files with yamllint
+    cmds:
+      - yamllint --config-file .yamllint.yaml .
+    preconditions:
+      - sh: command -v yamllint
+        msg: "yamllint is not installed. Install with: pip install yamllint"
+
+  validate:kustomize:
+    desc: Validate Kustomize builds for all clusters
+    cmds:
+      - |
+        failed=0
+        for cluster in infra apps; do
+          if [ -d "clusters/${cluster}/flux" ]; then
+            echo "Validating ${cluster}..."
+            if output=$(kustomize build "clusters/${cluster}/flux" --enable-helm 2>&1); then
+              echo "✓ ${cluster}: OK"
+            else
+              echo "✗ ${cluster}: FAILED"
+              echo "${output}"
+              failed=1
+            fi
+          else
+            echo "○ ${cluster}: skipped (no flux directory)"
+          fi
+        done
+        exit ${failed}
+    preconditions:
+      - sh: command -v kustomize
+        msg: "kustomize is not installed. Install from: https://kubectl.docs.kubernetes.io/installation/kustomize/"

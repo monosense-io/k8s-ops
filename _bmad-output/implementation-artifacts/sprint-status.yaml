@@ -1,0 +1,127 @@
+# generated: 2025-12-30
+# project: k8s-ops
+# project_key: k8s-ops
+# tracking_system: file-system
+# story_location: /home/monosense/projects/k8s-ops/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+# DEPENDENCY ANALYSIS (2025-12-31):
+# =================================
+# Epic 5 Stories 5.3-5.5 have dependencies on Epic 6 and Epic 7:
+#   - Story 5.3 (Deploy Business Apps) needs VolSync backups (Epic 7)
+#   - Story 5.4 (Multi-Cluster Validation) needs VictoriaMetrics/VictoriaLogs (Epic 6)
+#   - Story 5.5 (Document Lifecycle) depends on validation patterns from 5.4
+#
+# CORRECT EXECUTION ORDER:
+#   1. Epic 0-4: Foundation (no cross-dependencies)
+#   2. Epic 5.1-5.2: Bootstrap apps cluster, staged rollout (independent)
+#   3. Epic 6: Centralized Observability (needed for cross-cluster validation)
+#   4. Epic 7: Backup & Disaster Recovery (needed for stateful app deployment)
+#   5. Epic 5.3-5.5: Deploy apps with backups, validate with observability
+#   6. Epic 8: ArsipQ Development Platform
+
+generated: 2025-12-30
+project: k8s-ops
+project_key: k8s-ops
+tracking_system: file-system
+story_location: /home/monosense/projects/k8s-ops/_bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 0: Repository Foundation
+  epic-0: in-progress
+  0-1-initialize-repository-structure: done
+  0-2-create-shared-infrastructure-base: ready-for-dev
+  0-3-configure-cluster-specific-flux-entry-points: ready-for-dev
+  0-4-configure-sops-age-encryption: ready-for-dev
+  0-5-create-github-workflows-for-validation: ready-for-dev
+  epic-0-retrospective: optional
+
+  # Epic 1: Infra Cluster Bootstrap
+  epic-1: in-progress
+  1-1-create-talos-machine-configurations: ready-for-dev
+  1-2-create-helmfile-bootstrap-configuration: ready-for-dev
+  1-3-bootstrap-infra-cluster: ready-for-dev
+  1-4-deploy-external-secrets-operator-with-1password: ready-for-dev
+  1-5-create-operational-taskfiles-for-talos: ready-for-dev
+  epic-1-retrospective: optional
+
+  # Epic 2: Shared Infrastructure Services
+  epic-2: in-progress
+  2-1-deploy-rook-ceph-storage-cluster: ready-for-dev
+  2-2-configure-openebs-local-storage: ready-for-dev
+  2-3-implement-zero-trust-network-policies: ready-for-dev
+  2-4-deploy-cert-manager-with-dns-01-validation: ready-for-dev
+  2-5-configure-cilium-loadbalancer-ip-pools: ready-for-dev
+  2-6-configure-resource-management-policies: ready-for-dev
+  epic-2-retrospective: optional
+
+  # Epic 3: GitOps Operations
+  epic-3: in-progress
+  3-1-create-flux-operational-taskfiles: ready-for-dev
+  3-2-configure-renovate-for-dependency-management: ready-for-dev
+  3-3-create-reusable-kustomize-components: ready-for-dev
+  3-4-implement-pr-review-and-branch-protection: ready-for-dev
+  epic-3-retrospective: optional
+
+  # Epic 4: Application Deployment Patterns
+  epic-4: in-progress
+  4-1-deploy-envoy-gateway-for-ingress: ready-for-dev
+  4-2-deploy-cloudnative-pg-operator-and-shared-cluster: ready-for-dev
+  4-3-create-reference-application-deployment: ready-for-dev
+  4-4-create-kubernetes-operational-taskfiles: ready-for-dev
+  4-5-create-runbooks-for-major-components: ready-for-dev
+  epic-4-retrospective: optional
+
+  # Epic 5: Apps Cluster & Staged Rollout (SPLIT - early stories only)
+  # Stories 5.3-5.5 blocked until Epic 6 and Epic 7 complete
+  epic-5: in-progress
+  5-1-bootstrap-apps-cluster: ready-for-dev
+  5-2-implement-branch-based-staged-rollout: ready-for-dev
+  # BLOCKED: These stories require Epic 6 (Observability) and Epic 7 (Backup)
+  5-3-deploy-business-applications-to-apps-cluster: blocked  # needs Epic 7 for VolSync
+  5-4-create-multi-cluster-operational-validation: blocked   # needs Epic 6 for VMAgent/VictoriaLogs
+  5-5-document-cluster-lifecycle-operations: blocked         # depends on 5.4 patterns
+  epic-5-retrospective: optional
+
+  # Epic 6: Centralized Observability (PRIORITY - unblocks Epic 5.4)
+  epic-6: in-progress
+  6-1-deploy-victoriametrics-stack-on-infra-cluster: ready-for-dev
+  6-2-deploy-victorialogs-for-centralized-logging: ready-for-dev
+  6-3-configure-apps-cluster-observability-agents: ready-for-dev
+  6-4-deploy-grafana-with-multi-cluster-dashboards: ready-for-dev
+  6-5-configure-external-dns-and-alerting: ready-for-dev
+  epic-6-retrospective: optional
+
+  # Epic 7: Backup & Disaster Recovery (PRIORITY - unblocks Epic 5.3)
+  epic-7: in-progress
+  7-1-deploy-volsync-for-pvc-backups: ready-for-dev
+  7-2-configure-cnpg-barman-backups-to-r2: ready-for-dev
+  7-3-create-volsync-operational-taskfiles: ready-for-dev
+  7-4-document-and-test-disaster-recovery-procedures: ready-for-dev
+  epic-7-retrospective: optional
+
+  # Epic 8: ArsipQ Development Platform (requires Epic 6 for FR76)
+  epic-8: in-progress
+  8-1-deploy-strimzi-kafka-operator-and-cluster: ready-for-dev
+  8-2-deploy-apicurio-schema-registry: ready-for-dev
+  8-3-deploy-keycloak-for-oidc-authentication: ready-for-dev
+  8-4-deploy-openbao-for-secrets-management: ready-for-dev
+  8-5-configure-platform-health-monitoring-and-integration: ready-for-dev
+  epic-8-retrospective: optional
